@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>Love Portal ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#ff9ecf,#ffd6f5,#ffc3e6);
+overflow:hidden;
+}
+
+/* card */
+.card{
+background:white;
+padding:45px;
+border-radius:25px;
+box-shadow:0 20px 60px rgba(0,0,0,.25);
+text-align:center;
+width:90%;
+max-width:380px;
+animation:pop .4s ease;
+}
+
+@keyframes pop{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+input{
+padding:12px;
+border-radius:10px;
+border:1px solid #ddd;
+width:80%;
+margin-bottom:15px;
+}
+
+button{
+padding:12px 28px;
+border:none;
+border-radius:25px;
+cursor:pointer;
+font-size:16px;
+margin:8px;
+}
+
+.primary{
+background:#ff3d81;
+color:white;
+}
+
+#no{
+position:absolute;
+background:#eee;
+}
+
+.heart{
+position:absolute;
+font-size:18px;
+opacity:.3;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(100vh)}
+to{transform:translateY(-10vh)}
+}
+</style>
+</head>
+
+<body>
+
+<!-- music -->
+<audio id="bgmusic" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div id="app"></div>
+
+<script>
+const app=document.getElementById("app");
+const music=document.getElementById("bgmusic");
+
+/* ---------------- LOGIN ---------------- */
+showLogin();
+
+function showLogin(){
+app.innerHTML=`
+<div class="card">
+<h2>🔒 Secure Love Portal</h2>
+<p>Enter password</p>
+<input type="password" id="pass" placeholder="Password">
+<br>
+<button class="primary" onclick="enter()">Login</button>
+<p id="msg" style="color:red;font-size:14px;"></p>
+</div>`;
+}
+
+function enter(){
+const pass=document.getElementById("pass").value;
+
+if(pass==="Oye"){
+music.play();
+showValentine();
+}else{
+document.getElementById("msg").innerText="Hint: You call them this 😉";
+}
+}
+
+/* ---------------- VALENTINE ---------------- */
+function showValentine(){
+app.innerHTML=`
+<div class="card">
+<h1>Will you be my Valentine? 💘</h1>
+<button class="primary" id="yes">Yes ❤️</button>
+<button id="no">No 😢</button>
+</div>`;
+
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+
+function move(){
+const x=Math.random()*(window.innerWidth-120);
+const y=Math.random()*(window.innerHeight-60);
+no.style.left=x+"px";
+no.style.top=y+"px";
+}
+
+no.addEventListener("mouseover",move);
+no.addEventListener("click",move);
+
+yes.onclick=showLove;
+}
+
+/* ---------------- FINAL LOVE ---------------- */
+function showLove(){
+app.innerHTML=`
+<div style="
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+color:white;
+background:linear-gradient(135deg,#ff3d81,#ff8fab);">
+
+<h1 style="font-size:42px;">I love you Bujjiluuuuu ♥️</h1>
+<p style="font-size:20px;">You are my favorite person forever 💖</p>
+</div>`;
+
+confetti();
+fireworks();
+}
+
+/* ---------------- CONFETTI ---------------- */
+function confetti(){
+for(let i=0;i<150;i++){
+const c=document.createElement("div");
+c.style.position="absolute";
+c.style.width="8px";
+c.style.height="8px";
+c.style.background="white";
+c.style.left=Math.random()*100+"vw";
+c.style.top="-10px";
+c.style.borderRadius="50%";
+c.style.animation=`fall ${2+Math.random()*3}s linear`;
+document.body.appendChild(c);
+setTimeout(()=>c.remove(),4000);
+}
+}
+
+const style=document.createElement("style");
+style.innerHTML=`@keyframes fall{to{transform:translateY(110vh)}}`;
+document.head.appendChild(style);
+
+/* ---------------- FIREWORKS ---------------- */
+function fireworks(){
+setInterval(()=>{
+const f=document.createElement("div");
+f.style.position="absolute";
+f.style.width="6px";
+f.style.height="6px";
+f.style.background="yellow";
+f.style.left=Math.random()*100+"vw";
+f.style.top=Math.random()*60+"vh";
+f.style.borderRadius="50%";
+f.style.boxShadow="0 0 20px 10px pink";
+f.style.animation="boom 0.6s ease-out";
+document.body.appendChild(f);
+setTimeout(()=>f.remove(),600);
+},200);
+}
+
+const style2=document.createElement("style");
+style2.innerHTML=`@keyframes boom{from{transform:scale(0)}to{transform:scale(4);opacity:0}}`;
+document.head.appendChild(style2);
+
+/* floating hearts */
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*100+"vw";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),6000);
+},300);
+</script>
+
+</body>
+</html>
